@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'helper'
+require_relative 'helper'
 
 class TestAddressBR < Test::Unit::TestCase
   include DeterministicHelper
 
   assert_methods_are_deterministic(
     FFaker::AddressBR,
-    :zip_code, :state, :state_abbr, :city, :street_prefix, :street, :full_address
+    :zip_code, :state, :state_abbr, :city, :street_prefix, :street, :complement, :neighborhood, :full_address
   )
 
   def test_zip_code
@@ -32,6 +32,19 @@ class TestAddressBR < Test::Unit::TestCase
 
   def test_street
     prefixes = FFaker::AddressBR::STREET_PREFIX
-    assert_match(/(#{prefixes.join('|')})( \p{Alpha}+){1,2}/, FFaker::AddressBR.street)
+    assert_match(/\A(#{prefixes.join('|')})(?: [\p{Alpha}-]+)+\z/, FFaker::AddressBR.street)
+  end
+
+  def test_complement
+    assert_match(/\A(?:Apartamento \d{3}|Casa Térrea|Fundos)\z/, FFaker::AddressBR.complement)
+  end
+
+  def test_neighborhood
+    neighborhood_prefix = FFaker::AddressBR.neighborhood.split(' ').first
+    assert FFaker::AddressBR::NEIGHBORHOOD_PREFIXES.include?(neighborhood_prefix)
+  end
+
+  def test_full_address
+    assert_match(/\A[\p{Alpha}\d, -]+\z/, FFaker::AddressBR.full_address)
   end
 end

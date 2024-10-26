@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'helper'
+require_relative 'helper'
 
 class TestHTMLIpsum < Test::Unit::TestCase
   include DeterministicHelper
@@ -88,6 +88,12 @@ class TestHTMLIpsum < Test::Unit::TestCase
     # that we have a complete string.
     assert FFaker::HTMLIpsum.fancy_string.is_a?(String), 'returns a string'
     assert FFaker::HTMLIpsum.fancy_string.length > 1, 'the string is longer than one char'
+  end
+
+  def test_fancy_string_tags
+    # It returns a string with at least one HTML tag
+    assert_match(%r{(<.*>[\w\s]+</\w+>){1}}i, FFaker::HTMLIpsum.fancy_string(1))
+    assert_match(%r{(<.*>[\w\s]+</\w+>){1}}i, FFaker::HTMLIpsum.fancy_string(3))
   end
 
   def test_fancy_string_breaks

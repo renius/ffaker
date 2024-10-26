@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'helper'
+require_relative 'helper'
 
 class TestFakerLoremPL < Test::Unit::TestCase
   include DeterministicHelper
 
-  POLISH_WORD_MATCHER = /\A[A-Ża-ż\s]+\z/.freeze
-  POLISH_SENTENCE_MATCHER = /\A[A-Ża-ż\s.!?,]+\z/.freeze
+  POLISH_WORD_MATCHER = /\A[A-Ża-ż\s]+\z/
+  POLISH_SENTENCE_MATCHER = /\A[A-Ża-ż\s.!?,]+\z/
 
   assert_methods_are_deterministic(
     FFaker::LoremPL,

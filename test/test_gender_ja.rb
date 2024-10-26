@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'helper'
+require_relative 'helper'
 
 class TestFakerGenderJA < Test::Unit::TestCase
   include DeterministicHelper
 
-  GENDER_REGEX = /\A[女男]\z/.freeze
+  GENDER_REGEX = /\A[女男]\z/
 
   assert_methods_are_deterministic(FFaker::GenderJP, :random)
 

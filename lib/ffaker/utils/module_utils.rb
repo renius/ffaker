@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'ffaker/utils/array_utils'
-require 'ffaker/utils/random_utils'
-require 'ffaker/utils/unique_utils'
+require_relative 'array_utils'
+require_relative 'random_utils'
+require_relative 'unique_utils'
 
 module FFaker
   module ModuleUtils
@@ -13,8 +13,8 @@ module FFaker
     end
 
     def const_missing(const_name)
-      if const_name =~ /[a-z]/ # Not a constant, probably a class/module name.
-        super const_name
+      if const_name.match?(/[a-z]/) # Not a constant, probably a class/module name.
+        super(const_name)
       else
         mod_name = ancestors.first.to_s.split('::').last
         data_path = "#{FFaker::BASE_LIB_PATH}/ffaker/data/#{underscore(mod_name)}/#{underscore(const_name.to_s)}"
@@ -25,7 +25,7 @@ module FFaker
     end
 
     def underscore(string)
-      string.gsub(/::/, '/')
+      string.gsub('::', '/')
             .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
             .gsub(/([a-z\d])([A-Z])/, '\1_\2')
             .tr('-', '_')
@@ -33,7 +33,17 @@ module FFaker
     end
 
     def unique(max_retries = 10_000)
-      @unique_generator ||= FFaker::UniqueUtils.new(self, max_retries)
+      FFaker::UniqueUtils.add_instance(self, max_retries)
+    end
+
+    # http://en.wikipedia.org/wiki/Luhn_algorithm
+    def luhn_check(number)
+      sum = number.chars
+                  .map(&:to_i)
+                  .reverse
+                  .each_with_index
+                  .sum { |digit, index| index.even? ? (2 * digit).digits.sum : digit }
+      ((10 - (sum % 10)) % 10).to_s
     end
   end
 end

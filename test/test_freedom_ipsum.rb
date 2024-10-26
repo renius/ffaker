@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'helper'
+require_relative 'helper'
 class TestFreedomIpsum < Test::Unit::TestCase
   include DeterministicHelper
 
@@ -9,7 +9,7 @@ class TestFreedomIpsum < Test::Unit::TestCase
     :word, :words
   )
 
-  TEST_REGEX = /[a-z0-9 -]+/i.freeze
+  TEST_REGEX = /[a-z0-9 -]+/i
 
   def test_words
     assert_match(TEST_REGEX, FFaker::FreedomIpsum.words.join(' '))

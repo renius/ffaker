@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'helper'
+require_relative 'helper'
 
 class TestColor < Test::Unit::TestCase
   include DeterministicHelper
 
-  VALID_RGB_REGEX = /\A([0-9]{1,3})\z/.freeze
-  VALID_OPACITY_REGEX = /^([0-9].[0-9]{1,2})$/.freeze
-  VALID_PERCENTAGE_REGEX = /^([0-9]{1,3}%)$/.freeze
+  VALID_RGB_REGEX = /\A([0-9]{1,3})\z/
+  VALID_OPACITY_REGEX = /^([0-9].[0-9]{1,2})$/
+  VALID_PERCENTAGE_REGEX = /^([0-9]{1,3}%)$/
 
   assert_methods_are_deterministic(
     FFaker::Color,

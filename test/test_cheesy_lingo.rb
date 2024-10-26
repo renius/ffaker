@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'helper'
+require_relative 'helper'
 
 class TestCheesyLingo < Test::Unit::TestCase
   include DeterministicHelper
 
-  TEST_REGEX = /\+1|[a-z]+/i.freeze
+  TEST_REGEX = /\+1|[a-z]+/i
 
   assert_methods_are_deterministic(
     FFaker::CheesyLingo,

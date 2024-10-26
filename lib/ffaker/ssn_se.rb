@@ -54,7 +54,7 @@ module FFaker
     end
 
     def random_birth_time_between(from = ::Time.local(1940, 1, 1), to = ::Time.now)
-      ::Time.at(from + rand * (to.to_f - from.to_f))
+      ::Time.at(from + (rand * (to.to_f - from.to_f)))
     end
 
     def random_region_for(gender)
@@ -70,30 +70,11 @@ module FFaker
     end
 
     def random_region_odd
-      rand(0..498) * 2 + 1
+      (rand(0..498) * 2) + 1
     end
 
     def three_character_string(number)
       format('%03d', number)
-    end
-
-    # http://en.wikipedia.org/wiki/Luhn_algorithm
-    def luhn_check(number)
-      multiplications = []
-
-      number.split(//).each_with_index do |digit, i|
-        multiplications << i.even? ? digit.to_i * 2 : digit.to_i
-      end
-
-      sum = 0
-      multiplications.each do |num|
-        num.to_s.each_byte do |character|
-          sum += character.chr.to_i
-        end
-      end
-
-      control_digit = (sum % 10).zero? ? 0 : (sum / 10 + 1) * 10 - sum
-      control_digit.to_s
     end
   end
 end

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'helper'
+require_relative 'helper'
 
 class TestFakerNamePH < Test::Unit::TestCase
   include DeterministicHelper
 
-  PH_REGEXP = /\A([\wñÑú-]+\.? ?){2,5}\z/.freeze
+  PH_REGEXP = /\A([\wñÑú-]+\.? ?){2,5}\z/
 
   assert_methods_are_deterministic(
     FFaker::NamePH,

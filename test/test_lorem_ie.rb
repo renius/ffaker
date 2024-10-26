@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'helper'
+require_relative 'helper'
 
 class TestLoremIE < Test::Unit::TestCase
   include DeterministicHelper
@@ -11,8 +11,8 @@ class TestLoremIE < Test::Unit::TestCase
     :phrase, :phrases, :word, :words, :question
   )
 
-  WORDS_REGEX = /\A[\w\W]+\z/i.freeze # spaces, alphanumeric & perioids, etc.
-  WORD_REGEX = /\A[áéíóúa-z]+\z/i.freeze
+  WORDS_REGEX = /\A[\w\W]+\z/i # spaces, alphanumeric & perioids, etc.
+  WORD_REGEX = /\A[áéíóúa-z]+\z/i
 
   def test_paragraph
     assert_match(WORDS_REGEX, FFaker::LoremIE.paragraph)
